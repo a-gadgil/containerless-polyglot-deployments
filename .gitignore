@@ -1,0 +1,32 @@
+# Binaries and compiled output
+*.o
+*.a
+*.so
+*.dylib
+*.out
+dist/
+build/
+target/
+*.class
+
+# Python
+__pycache__/
+*.py[cod]
+*.whl
+.venv/
+env/
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# Java / Maven / Gradle
+*.jar
+*.war
+.gradle/
+out/
+
+# OS metadata
+.DS_Store
+.idea/
+*.swp
