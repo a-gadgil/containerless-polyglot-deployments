@@ -1,0 +1,23 @@
+[Unit]
+Description=Host-Native Go Service (Polyglot Lab)
+After=network.target
+
+[Service]
+Type=simple
+User=aditya
+Group=aditya
+ExecStart=/usr/local/bin/go-host-service
+Restart=on-failure
+RestartSec=5
+Environment=PORT=8080
+
+# Security Hardening Directives
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+NoNewPrivileges=true
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target

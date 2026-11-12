@@ -30,3 +30,11 @@ out/
 .DS_Store
 .idea/
 *.swp
+
+# Go Build Outputs & Staging
+go/bin/
+go/dist/
+
+# Pre-commit & Security Caches
+.pre-commit-trivy-cache/
+.cache/
