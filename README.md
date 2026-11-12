@@ -1,6 +1,6 @@
 # containerless-polyglot-deployments
 
-A production-grade reference repository demonstrating continuous integration (CI) and deployment (CD) pipelines for **non-containerized, host-native workloads**. 
+A production-grade reference repository demonstrating continuous integration (CI) and deployment (CD) pipelines for **non-containerized, host-native workloads**.
 
 This project intentionally avoids Docker/OCI containers, focusing instead on compiling, packaging, and deploying applications directly onto target operating systems, virtual machines, and bare-metal environments using native system managers (e.g., `systemd`) and artifact repositories.
 

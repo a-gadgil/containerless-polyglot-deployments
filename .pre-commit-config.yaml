@@ -1,0 +1,46 @@
+repos:
+  # 1. Universal File Hygiene & Safety Checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+        args: ['--unsafe']
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ['--maxkb=1024']
+        exclude: ^(go/bin/|\.pre-commit-trivy-cache/)
+      - id: detect-private-key
+
+  # 2. Go Formatting & Static Analysis
+  - repo: local
+    hooks:
+      - id: go-fmt
+        name: Format Go code (gofmt)
+        entry: gofmt -w
+        language: system
+        files: '\.go$'
+      - id: go-vet
+        name: Run Go static analysis (go vet)
+        entry: bash -c 'cd go && go vet ./...'
+        language: system
+        files: '^go/.*\.go$'
+        pass_filenames: false
+
+  # 3. Hardcoded Secret Scanner
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+        name: Detect hardcoded secrets with Gitleaks
+
+  # 4. Local Trivy Filesystem & IaC Scanner
+  - repo: local
+    hooks:
+      - id: trivy-fs
+        name: Scan workspace with Trivy
+        entry: trivy fs --scanners vuln,misconfig --exit-code 1 --severity HIGH,CRITICAL .
+        language: system
+        pass_filenames: false
