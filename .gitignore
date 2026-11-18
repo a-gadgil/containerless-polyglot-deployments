@@ -38,3 +38,8 @@ go/dist/
 # Pre-commit & Security Caches
 .pre-commit-trivy-cache/
 .cache/
+# Compiled Go binaries
+go-hello-svc
+*.exe
+bin/
+dist/
