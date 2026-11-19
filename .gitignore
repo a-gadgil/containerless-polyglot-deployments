@@ -43,3 +43,7 @@ go-hello-svc
 *.exe
 bin/
 dist/
+**/dist/
+**/*.tar.gz
+**/*.sha256
+**/.env
