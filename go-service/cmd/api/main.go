@@ -109,7 +109,7 @@ func main() {
 	})
 
 	srv := &http.Server{
-		Addr:         "127.0.0.1:" + port, // Bind strictly to loopback; Nginx proxies external traffic
+		Addr:         getEnv("APP_HOST", "127.0.0.1") + ":" + port, // Bind strictly to loopback; Nginx proxies external traffic
 		Handler:      mux,
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
