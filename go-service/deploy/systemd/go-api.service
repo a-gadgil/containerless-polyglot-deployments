@@ -1,0 +1,39 @@
+[Unit]
+Description=Go 4-Tier API Service
+After=network-online.target mysql.service redis-server.service
+Wants=network-online.target mysql.service redis-server.service
+
+[Service]
+Type=simple
+User=goapp
+Group=goapp
+WorkingDirectory=/opt/go-api/current
+ExecStart=/opt/go-api/current/go-api
+EnvironmentFile=/etc/go-api/env
+
+# Restart & Graceful Shutdown
+Restart=always
+RestartSec=3
+TimeoutStopSec=15
+KillSignal=SIGTERM
+
+# Cgroup Resource Limits
+MemoryMax=256M
+CPUQuota=100%
+
+# Filesystem & Privilege Sandboxing
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+RestrictNamespaces=yes
+
+# Logging to journald
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=go-api
+
+[Install]
+WantedBy=multi-user.target
