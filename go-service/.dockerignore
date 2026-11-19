@@ -1,0 +1,7 @@
+.git
+.gitignore
+dist/
+deploy/
+docker/
+*.tar.gz
+*.sha256
