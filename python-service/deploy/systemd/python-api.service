@@ -1,0 +1,33 @@
+[Unit]
+Description=3-Tier Python FastAPI Service (Host-Native)
+After=network-online.target postgresql.service redis-server.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pyapp
+Group=pyapp
+WorkingDirectory=/opt/python-api/current
+EnvironmentFile=/etc/python-api/python-api.env
+ExecStart=/opt/python-api/current/venv/bin/gunicorn app.main:app \
+    --worker-class uvicorn.workers.UvicornWorker \
+    --workers ${WEB_CONCURRENCY} \
+    --bind ${APP_HOST}:${APP_PORT} \
+    --access-logfile - \
+    --error-logfile -
+Restart=always
+RestartSec=3
+KillSignal=SIGTERM
+TimeoutStopSec=15
+
+# Resource & Filesystem Hardening
+MemoryMax=256M
+CPUQuota=100%
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadOnlyPaths=/opt/python-api
+
+[Install]
+WantedBy=multi-user.target
