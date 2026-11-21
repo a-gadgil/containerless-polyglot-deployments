@@ -1,0 +1,29 @@
+[Unit]
+Description=3-Tier Java Spring Boot Service (Host-Native)
+After=network-online.target postgresql.service redis-server.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=javaapp
+Group=javaapp
+WorkingDirectory=/opt/java-api/current
+EnvironmentFile=/etc/java-api/java-api.env
+ExecStart=/usr/bin/java $JAVA_OPTS -jar /opt/java-api/current/java-api.jar
+Restart=always
+RestartSec=3
+KillSignal=SIGTERM
+TimeoutStopSec=20
+SuccessExitStatus=143
+
+# Resource & Filesystem Hardening
+MemoryMax=512M
+CPUQuota=100%
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadOnlyPaths=/opt/java-api
+
+[Install]
+WantedBy=multi-user.target
